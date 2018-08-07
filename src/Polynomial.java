@@ -5,14 +5,39 @@ public class Polynomial {
 	
 	List<PolyTerm> terms;
 	
+	public static int string2Number(String num){
+		if(num.length()==0) return 0;
+		int out;
+		if(num.startsWith("-")){
+			out=-1*Integer.valueOf(num.substring(1, num.length()));
+		}else out=Integer.valueOf(num);
+		return out;
+	}
+	
+	public static PolyTerm string2Term(String subString){
+		int length=subString.length();
+		String temp;
+		String temp2;
+		try{
+		temp=subString.substring(0,subString.indexOf('x'));
+		temp2=subString.substring(subString.indexOf('^')+1,length);
+		}
+		catch(StringIndexOutOfBoundsException e){
+			temp=subString;
+			temp2="";
+		}
+		int prefix=string2Number(temp);
+		int pow=string2Number(temp2);
+		return new PolyTerm(prefix,pow);
+	}
+	
 	Polynomial (String input){
 		this.terms = new ArrayList<PolyTerm>();
-		input.replace("-","+-");
-		input.replace(" ", "");
-		String[] subPolynomials = input.split("+",0);
+		input=input.replace("-","+-");
+		input=input.replace(" ", "");
+		String[] subPolynomials = input.split("\\+");
 		for(int i=0;i<subPolynomials.length;i++){
-			String[] splitSubPolynomial = subPolynomials[i].split("[a-z]||^");
-			//terms.add(new PolyTerm(splitSubPolynomial[0],splitSubPolynomial[splitSubPolynomial.length-1])));
+			terms.add(string2Term(subPolynomials[i]));
 		}
 	}
 	
