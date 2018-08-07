@@ -33,6 +33,32 @@ ArrayList<PolyTerm> terms;
 		return new PolyTerm(prefix,pow);
 	}
 	
+	public static int string2Number(String num){
+		if(num.length()==0) return 0;
+		int out;
+		if(num.startsWith("-")){
+			out=-1*Integer.valueOf(num.substring(1, num.length()));
+		}else out=Integer.valueOf(num);
+		return out;
+	}
+	
+	public static PolyTerm string2Term(String subString){
+		int length=subString.length();
+		String temp;
+		String temp2;
+		try{
+		temp=subString.substring(0,subString.indexOf('x'));
+		temp2=subString.substring(subString.indexOf('^')+1,length);
+		}
+		catch(StringIndexOutOfBoundsException e){
+			temp=subString;
+			temp2="";
+		}
+		int prefix=string2Number(temp);
+		int pow=string2Number(temp2);
+		return new PolyTerm(prefix,pow);
+	}
+	
 	Polynomial (String input){
 		this.terms = new ArrayList<PolyTerm>();
 		input=input.replace("-","+-");
@@ -162,6 +188,7 @@ ArrayList<PolyTerm> terms;
 		return answer;
 	}
 	
+
 	@Override 
 	public String toString(){
 		Collections.sort(terms);
@@ -180,6 +207,7 @@ ArrayList<PolyTerm> terms;
 		} 
 		return output;
 	}
+
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
