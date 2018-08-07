@@ -12,7 +12,7 @@ public class Polynomial {
 		String[] subPolynomials = input.split("+",0);
 		for(int i=0;i<subPolynomials.length;i++){
 			String[] splitSubPolynomial = subPolynomials[i].split("[a-z]||^");
-			terms.add(new PolyTerm(splitSubPolynomial[0],splitSubPolynomial[splitSubPolynomial.length-1])));
+			//terms.add(new PolyTerm(splitSubPolynomial[0],splitSubPolynomial[splitSubPolynomial.length-1])));
 		}
 	}
 	
@@ -49,6 +49,20 @@ public class Polynomial {
 		return add(poly1,multiplication(poly2,negPoly));
 	}
 	
+	
+	@Override 
+	public String toString(){
+		Collections.sort(terms);
+		String output = "";
+		for(int i=0; i<terms.size(); i++){
+			if (terms.get(i).coefficient >0){
+				output += " + " + terms.get(i) + "x^" + terms.get(i).power;
+			} else if (terms.get(i).coefficient < 0) {
+				output += " - " + terms.get(i) + "x^" + terms.get(i).power;
+			}
+		}
+		return output;
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
